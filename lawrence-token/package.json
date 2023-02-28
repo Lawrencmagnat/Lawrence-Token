@@ -1,15 +1,25 @@
 {
-  "name": "lawrence-token",
+  "name": "hardhat-project",
+  "description": "This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lawrencmagnat/Lawrence-Token.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lawrencmagnat/Lawrence-Token/issues"
+  },
+  "homepage": "https://github.com/Lawrencmagnat/Lawrence-Token#readme",
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "hardhat": "^2.12.7"
   },
   "dependencies": {

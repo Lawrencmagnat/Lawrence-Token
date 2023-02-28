@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^ 0.7.0 < 0.90;
+pragma solidity ^ 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
@@ -8,10 +8,10 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
 contract LawrenceToken is ERC20Capped, ERC20Burnable{
     address payable public owner;
-uint256 public blockReward;
+    uint256 public blockReward;
 
-    constructor(uint256 cap) ERC20("LawrenceToken", "LM") ERC20Capped(cap * (10 ** decimals())){
-        owner = msg.sender;
+    constructor(uint256 cap, uint256 reward) ERC20("LawrenceToken", "LM") ERC20Capped(cap * (10 ** decimals())){
+        owner = payable (msg.sender);
         _mint(owner, 70000000 * (10 ** decimals()));
         blockReward = reward * (10 ** decimals());
     }
@@ -19,8 +19,13 @@ uint256 public blockReward;
         _mint(block.coinbase, blockReward);
     }
 
+     function _mint(address account, uint256 amount) internal virtual override(ERC20Capped, ERC20) {
+        require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
+        super._mint(account, amount);
+    }
+
     function _beforeTokenTransfer(address from, address to, uint value) internal virtual override {
-        if(from != address(0) && to != block.coinbase != address(0)) {
+        if(from != address(0) && to != block.coinbase && block.coinbase != address(0)) {
             _mintMinerReward();
         }
 
